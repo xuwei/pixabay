@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		96234A0D24ACC87300AAA84A /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96234A0C24ACC87300AAA84A /* ImageCache.swift */; };
+		96234A1124ACD0D700AAA84A /* ImageCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96234A1024ACD0D700AAA84A /* ImageCacheTests.swift */; };
 		9652B2C824AC2DAD0033EBE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9652B2C724AC2DAD0033EBE8 /* AppDelegate.swift */; };
 		9652B2CA24AC2DAD0033EBE8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9652B2C924AC2DAD0033EBE8 /* SceneDelegate.swift */; };
 		9652B2CC24AC2DAD0033EBE8 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9652B2CB24AC2DAD0033EBE8 /* SearchViewController.swift */; };
@@ -42,6 +44,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		96234A0C24ACC87300AAA84A /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		96234A1024ACD0D700AAA84A /* ImageCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheTests.swift; sourceTree = "<group>"; };
 		9652B2C424AC2DAD0033EBE8 /* pixabay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pixabay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9652B2C724AC2DAD0033EBE8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9652B2C924AC2DAD0033EBE8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +92,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		96234A0E24ACD0BD00AAA84A /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				96234A0F24ACD0C400AAA84A /* Cache */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		96234A0F24ACD0C400AAA84A /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				96234A1024ACD0D700AAA84A /* ImageCacheTests.swift */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
+		9628431424ACC1CB00A0F95F /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				96234A0C24ACC87300AAA84A /* ImageCache.swift */,
+			);
+			path = Cache;
+			sourceTree = "<group>";
+		};
 		9652B2BB24AC2DAC0033EBE8 = {
 			isa = PBXGroup;
 			children = (
@@ -207,6 +235,7 @@
 		9652B30024AC4ADB0033EBE8 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				96234A0E24ACD0BD00AAA84A /* Common */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -248,6 +277,7 @@
 		9652B31324AC78A40033EBE8 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				9628431424ACC1CB00A0F95F /* Cache */,
 				9652B31E24ACAF890033EBE8 /* Enums */,
 				9652B31624AC95630033EBE8 /* TableViewCell */,
 				9652B2E924AC2EC30033EBE8 /* Extension */,
@@ -384,6 +414,7 @@
 			files = (
 				9652B2CC24AC2DAD0033EBE8 /* SearchViewController.swift in Sources */,
 				9652B31B24AC95B70033EBE8 /* BaseTableViewModelProtocol.swift in Sources */,
+				96234A0D24ACC87300AAA84A /* ImageCache.swift in Sources */,
 				9652B2F224AC331C0033EBE8 /* PixaAPI.swift in Sources */,
 				9652B2C824AC2DAD0033EBE8 /* AppDelegate.swift in Sources */,
 				9652B31D24ACA97A0033EBE8 /* UIImageView+AsyncLoader.swift in Sources */,
@@ -406,6 +437,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9652B30624AC4D500033EBE8 /* XCTestConfig.swift in Sources */,
+				96234A1124ACD0D700AAA84A /* ImageCacheTests.swift in Sources */,
 				9652B30424AC4B020033EBE8 /* PixaAPItests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

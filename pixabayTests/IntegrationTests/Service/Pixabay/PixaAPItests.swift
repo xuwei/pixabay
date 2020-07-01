@@ -118,8 +118,8 @@ class PixaAPItests: XCTestCase {
                 XCTAssertTrue(result.images.count == 0)
             case .failure:
                 XCTFail()
-            expectation.fulfill()
             }
+            expectation.fulfill()
             
         }
         
