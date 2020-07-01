@@ -57,6 +57,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITa
         let cellModel = viewModel.data[indexPath.row]
         let cell: ImageViewCell = tableView.dequeueReusableCell(withIdentifier: cellModel.identifier, for: indexPath) as! ImageViewCell
         cell.setupUI(cellModel)
+        
+        /// loading image from tableviewcontroller, to handle scenario where cells are already scrolled passed and we want to determine if we still apply the fetched image
         ImageLoader.shared.loadImage(from: cellModel.imageUrl) { image in
             guard let img = image else { return }
             DispatchQueue.main.async {

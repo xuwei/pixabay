@@ -31,7 +31,6 @@
 		9652B31224AC76C60033EBE8 /* ImageViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9652B31124AC76C60033EBE8 /* ImageViewCellViewModel.swift */; };
 		9652B31524AC92960033EBE8 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9652B31424AC92960033EBE8 /* UIViewController+Alert.swift */; };
 		9652B31B24AC95B70033EBE8 /* BaseTableViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9652B31A24AC95B70033EBE8 /* BaseTableViewModelProtocol.swift */; };
-		9652B31D24ACA97A0033EBE8 /* UIImageView+AsyncLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9652B31C24ACA97A0033EBE8 /* UIImageView+AsyncLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,7 +72,6 @@
 		9652B31124AC76C60033EBE8 /* ImageViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewCellViewModel.swift; sourceTree = "<group>"; };
 		9652B31424AC92960033EBE8 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		9652B31A24AC95B70033EBE8 /* BaseTableViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewModelProtocol.swift; sourceTree = "<group>"; };
-		9652B31C24ACA97A0033EBE8 /* UIImageView+AsyncLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+AsyncLoader.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,7 +173,6 @@
 			isa = PBXGroup;
 			children = (
 				9652B31424AC92960033EBE8 /* UIViewController+Alert.swift */,
-				9652B31C24ACA97A0033EBE8 /* UIImageView+AsyncLoader.swift */,
 				96234A1224ACDE4200AAA84A /* UIViewController+Keyboard.swift */,
 			);
 			path = Extension;
@@ -428,7 +425,6 @@
 				96234A0D24ACC87300AAA84A /* ImageCache.swift in Sources */,
 				9652B2F224AC331C0033EBE8 /* PixaAPI.swift in Sources */,
 				9652B2C824AC2DAD0033EBE8 /* AppDelegate.swift in Sources */,
-				9652B31D24ACA97A0033EBE8 /* UIImageView+AsyncLoader.swift in Sources */,
 				9652B2FE24AC38D10033EBE8 /* PixaAPISearchReq.swift in Sources */,
 				9652B2F024AC30F00033EBE8 /* SearchViewModel.swift in Sources */,
 				960C9A8924AD3F0600E3EC42 /* ImageLoader.swift in Sources */,
