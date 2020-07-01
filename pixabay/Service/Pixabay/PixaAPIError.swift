@@ -17,7 +17,7 @@ enum PixaAPIError: Error {
 }
 
 extension PixaAPIError: LocalizedError {
-    public var localizedDescription: String {
+    public var errorDescription: String? {
         switch self {
         case .invalidURL:
             return "Invalid URL"

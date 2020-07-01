@@ -66,7 +66,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITa
                     guard let self = self else { return }
                     switch result {
                     case .failure(let err):
-                        self.alertError(err)
+                        self.alertError(with: err)
                     case .success:
                         self.refresh()
                     }
@@ -91,7 +91,7 @@ extension SearchViewController: UISearchBarDelegate {
             case .success:
                 self.refresh()
             case .failure(let err):
-                self.alertError(err)
+                self.alertError(with: err)
             }
         }
     }

@@ -13,12 +13,16 @@ extension UIViewController {
     func alert(_ msg: String) {
         let alert = UIAlertController(title: "Message", message: msg, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            self.present(alert, animated: true, completion: nil)
+        }
     }
     
-    func alertError(_ err: Error) {
+    func alertError(with err: Error) {
         let alert = UIAlertController(title: "Error", message: err.localizedDescription, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
-        self.present(alert, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 }

@@ -19,11 +19,13 @@ class ImageViewCell: BaseTableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        cellImage.layer.cornerRadius = 4.0
     }
     
     override func setupUI(_ viewModel: BaseTableViewModelProtocol) {
         let vm = viewModel as! ImageViewCellViewModel
         user.text = vm.user
         tags.text = vm.tags
+        cellImage.loadImage(from: vm.imageUrl)
     }
 }

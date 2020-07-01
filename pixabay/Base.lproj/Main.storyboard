@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CoC-9I-GXH">
-                                <rect key="frame" x="8" y="144" width="398" height="718"/>
+                                <rect key="frame" x="16" y="144" width="382" height="718"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="fx8-Tj-B1A"/>
@@ -36,12 +36,12 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="CoC-9I-GXH" firstAttribute="top" secondItem="35M-1v-GqU" secondAttribute="bottom" id="52s-bU-RpK"/>
-                            <constraint firstItem="CoC-9I-GXH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="Mnl-bU-bO8"/>
+                            <constraint firstItem="CoC-9I-GXH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Mnl-bU-bO8"/>
                             <constraint firstItem="35M-1v-GqU" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-8" id="Wiz-uo-cF1"/>
                             <constraint firstItem="CoC-9I-GXH" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="dGl-Fj-gZF"/>
                             <constraint firstItem="35M-1v-GqU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="fSs-xm-dF0"/>
                             <constraint firstItem="35M-1v-GqU" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="haC-9Q-vCG"/>
-                            <constraint firstItem="CoC-9I-GXH" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-8" id="vW0-dw-D9P"/>
+                            <constraint firstItem="CoC-9I-GXH" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-16" id="vW0-dw-D9P"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

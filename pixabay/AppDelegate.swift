@@ -15,11 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-         if #available(iOS 13, *) {
-            // do nothing / do things that should only be done for iOS 13
-         } else {
-            // do iOS 12 specific window setup
-         }
         return true
     }
 
