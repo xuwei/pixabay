@@ -20,6 +20,7 @@ class SearchViewController: UIViewController {
         self.title = viewModel.title
         setupTableView()
         registerCells()
+        enableTapToKeyboardDismiss()
     }
     
     func setupTableView() {
@@ -71,6 +72,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITa
                         self.refresh()
                     }
                 }
+                
+                /// no need to check further once we know we need to load more
                 return
             }
         }

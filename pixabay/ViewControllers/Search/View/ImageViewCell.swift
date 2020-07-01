@@ -26,6 +26,12 @@ class ImageViewCell: BaseTableViewCell {
         let vm = viewModel as! ImageViewCellViewModel
         user.text = vm.user
         tags.text = vm.tags
-        cellImage.loadImage(from: vm.imageUrl)
+        cellImage.loadImage(from: vm.imageUrl) { [weak self] image in
+            guard let self = self else { return }
+            guard let image = image else { return }
+            DispatchQueue.main.async {
+                self.cellImage.image = image
+            }
+        }
     }
 }

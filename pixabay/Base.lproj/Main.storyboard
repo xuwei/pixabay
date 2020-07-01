@@ -25,7 +25,7 @@
                                     <outlet property="prefetchDataSource" destination="BYZ-38-t0r" id="ZMn-DN-3cj"/>
                                 </connections>
                             </tableView>
-                            <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="35M-1v-GqU">
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search" translatesAutoresizingMaskIntoConstraints="NO" id="35M-1v-GqU">
                                 <rect key="frame" x="8" y="88" width="398" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <connections>

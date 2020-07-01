@@ -10,15 +10,24 @@ import UIKit
 
 extension UIImageView {
     
-    func loadImage(from urlString: String) {
+    func loadImage(from urlString: String, completionHandler: @escaping (UIImage?)->Void) {
+       
+        /// check with ImageCache first
+        let cachedImage = ImageCache.shared.loadImage(by: urlString)
+        if cachedImage != nil {
+            completionHandler(cachedImage)
+            return
+        }
+        
+        /// otherwise we fetch from url
         guard let url = URL(string: urlString) else { return }
         let session: URLSession = URLSession(configuration: .default)
-        let dataTask = session.dataTask(with: url) { [weak self] data, _, _ in
-            guard let self = self else { return }
+        let dataTask = session.dataTask(with: url) { data, _, _ in
             guard let data = data else { return }
-            DispatchQueue.main.async {
-                self.image = UIImage(data: data)
-            }
+            guard let image = UIImage(data: data) else { completionHandler(nil); return }
+            ImageCache.shared.cacheImage(by: urlString, image: image)
+            completionHandler(image)
+            
         }
         dataTask.resume()
     }

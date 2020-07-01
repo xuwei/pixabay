@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		96234A0D24ACC87300AAA84A /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96234A0C24ACC87300AAA84A /* ImageCache.swift */; };
 		96234A1124ACD0D700AAA84A /* ImageCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96234A1024ACD0D700AAA84A /* ImageCacheTests.swift */; };
+		96234A1324ACDE4200AAA84A /* UIViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96234A1224ACDE4200AAA84A /* UIViewController+Keyboard.swift */; };
 		9652B2C824AC2DAD0033EBE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9652B2C724AC2DAD0033EBE8 /* AppDelegate.swift */; };
 		9652B2CA24AC2DAD0033EBE8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9652B2C924AC2DAD0033EBE8 /* SceneDelegate.swift */; };
 		9652B2CC24AC2DAD0033EBE8 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9652B2CB24AC2DAD0033EBE8 /* SearchViewController.swift */; };
@@ -46,6 +47,7 @@
 /* Begin PBXFileReference section */
 		96234A0C24ACC87300AAA84A /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		96234A1024ACD0D700AAA84A /* ImageCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheTests.swift; sourceTree = "<group>"; };
+		96234A1224ACDE4200AAA84A /* UIViewController+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Keyboard.swift"; sourceTree = "<group>"; };
 		9652B2C424AC2DAD0033EBE8 /* pixabay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pixabay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9652B2C724AC2DAD0033EBE8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9652B2C924AC2DAD0033EBE8 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 			children = (
 				9652B31424AC92960033EBE8 /* UIViewController+Alert.swift */,
 				9652B31C24ACA97A0033EBE8 /* UIImageView+AsyncLoader.swift */,
+				96234A1224ACDE4200AAA84A /* UIViewController+Keyboard.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 				9652B2F824AC35460033EBE8 /* PixaImageModel.swift in Sources */,
 				9652B31524AC92960033EBE8 /* UIViewController+Alert.swift in Sources */,
 				9652B2FA24AC35A30033EBE8 /* PixaSearchResultModel.swift in Sources */,
+				96234A1324ACDE4200AAA84A /* UIViewController+Keyboard.swift in Sources */,
 				9652B2CA24AC2DAD0033EBE8 /* SceneDelegate.swift in Sources */,
 				9652B2F524AC340C0033EBE8 /* PixaAPIError.swift in Sources */,
 				9652B30A24AC6F640033EBE8 /* ImageViewCell.swift in Sources */,
