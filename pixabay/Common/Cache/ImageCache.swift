@@ -8,13 +8,16 @@
 
 import UIKit
 
+/// O(1) to remove oldest using circular queue indexing
+/// O(1) to insert
+/// O(1) to lookup by map
 class ImageCache {
     
     static let shared = ImageCache()
     private let cacheSize = 100
     private var history = [String]()
     private var imageCache = [String: UIImage]()
-    private var newestIndex = -1
+    private var nextIndexToAdd = 0
     private var oldestIndex = 0
     
     private init() {
@@ -23,65 +26,76 @@ class ImageCache {
     }
     
     func cacheImage(by key: String, image: UIImage) {
-        printInfo()
         if imageCache.count == cacheSize {
+            /// once cacheSize have reached, we start removing oldest as we add new
             removeOldest()
             addNew(key, image)
         } else {
+            /// before the cacheSize is filled up, we simply add new
             addNew(key, image)
         }
     }
     
+    /// helper method to return which key is oldest
     func oldestKey()-> String {
         if history.isEmpty { return "" }
         return history[oldestIndex]
     }
     
-    /// newestIndex is for the next item to be added, so we want to move one index back
+    /// return key of the newest item
     func newestKey()->String {
         return history[newestKeyIndex()]
     }
     
-    /// newestIndex + cacheSize to avoid -1, we will still get the right index through mod
+    /// newestIndex + cacheSize to avoid negative number when we minus 1
+    /// through mod of cacheSize, we will get the right index before "nextIndexToAdd" in our circular queue indexing
     private func newestKeyIndex()->Int {
-        let currentNewestIndex = ((newestIndex + cacheSize) - 1) % cacheSize
+        let currentNewestIndex = ((nextIndexToAdd + cacheSize) - 1) % cacheSize
         return currentNewestIndex
     }
     
+    /// to reset the cache
     func clear() {
         oldestIndex = 0
-        newestIndex = -1
+        nextIndexToAdd = 0
         imageCache = [String: UIImage]()
         history = [String]()
         imageCache.reserveCapacity(cacheSize)
         history.reserveCapacity(cacheSize)
     }
     
+    /// load image from cache
     func loadImage(by key: String)->UIImage? {
         return imageCache[key]
     }
     
+    /// print method for debugging purpose
     func printInfo() {
        print(history)
        print(imageCache)
+       print("history count: \(history.count)")
+       print("cache items count: \(imageCache.count)")
     }
        
-    
+    /// removes the oldest item from imageCache map
     private func removeOldest() {
         imageCache.removeValue(forKey: oldestKey())
     }
     
+    /// whenever we have new image to cache, we use this method
     private func addNew(_ key: String, _ image: UIImage) {
-        /// only happens when we filled up the cache size
+        /// When we filled up the cache size, we start updating both newest index and oldest index
+        /// To create a circular queue 
         if (history.count == cacheSize) {
-            history[newestIndex] = key
+            history[nextIndexToAdd] = key
             imageCache[key] = image
-            newestIndex = (newestIndex + 1) % cacheSize
+            nextIndexToAdd = (nextIndexToAdd + 1) % cacheSize
             oldestIndex = (oldestIndex + 1) % cacheSize
         } else {
+            /// before cache is filled up, simply add, oldestIndex remains 0
             history.append(key)
             imageCache[key] = image
-            newestIndex = history.count % cacheSize
+            nextIndexToAdd = history.count % cacheSize
         }
     }
 }
