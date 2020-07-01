@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ImageViewCell: BaseTableViewCell {
+class ImageViewCell: UITableViewCell {
     
     static var cellIdentifier: String = "ImageViewCell"
     
@@ -22,16 +22,12 @@ class ImageViewCell: BaseTableViewCell {
         cellImage.layer.cornerRadius = 4.0
     }
     
-    override func setupUI(_ viewModel: BaseTableViewModelProtocol) {
+    func setupUI(_ viewModel: BaseTableViewModelProtocol) {
         let vm = viewModel as! ImageViewCellViewModel
         user.text = vm.user
         tags.text = vm.tags
-        cellImage.loadImage(from: vm.imageUrl) { [weak self] image in
-            guard let self = self else { return }
-            guard let image = image else { return }
-            DispatchQueue.main.async {
-                self.cellImage.image = image
-            }
-        }
+        
+        // reset image before loading from tableviewcontroller 
+        cellImage.image = nil
     }
 }

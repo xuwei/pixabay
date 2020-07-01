@@ -55,8 +55,17 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cellModel = viewModel.data[indexPath.row]
-        let cell: BaseTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellModel.identifier, for: indexPath) as! BaseTableViewCell
+        let cell: ImageViewCell = tableView.dequeueReusableCell(withIdentifier: cellModel.identifier, for: indexPath) as! ImageViewCell
         cell.setupUI(cellModel)
+        ImageLoader.shared.loadImage(from: cellModel.imageUrl) { image in
+            guard let img = image else { return }
+            DispatchQueue.main.async {
+                if let existingCell = tableView.cellForRow(at: indexPath) as? ImageViewCell {
+                    existingCell.cellImage.image = img
+                }
+                
+            }
+        }
         return cell
     }
     

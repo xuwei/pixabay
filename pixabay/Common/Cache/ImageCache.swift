@@ -23,6 +23,7 @@ class ImageCache {
     }
     
     func cacheImage(by key: String, image: UIImage) {
+        printInfo()
         if imageCache.count == cacheSize {
             removeOldest()
             addNew(key, image)
