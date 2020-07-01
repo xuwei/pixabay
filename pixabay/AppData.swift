@@ -8,6 +8,10 @@
 
 import UIKit
 
+enum ScreenName: String {
+    case search = "Pixabay"
+}
+
 class AppData {
 
 }

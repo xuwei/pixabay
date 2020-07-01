@@ -17,27 +17,39 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="CoC-9I-GXH">
-                                <rect key="frame" x="0.0" y="144" width="414" height="718"/>
+                                <rect key="frame" x="8" y="144" width="398" height="718"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="fx8-Tj-B1A"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="1Wc-3a-QSy"/>
+                                    <outlet property="prefetchDataSource" destination="BYZ-38-t0r" id="ZMn-DN-3cj"/>
+                                </connections>
                             </tableView>
-                            <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="35M-1v-GqU">
-                                <rect key="frame" x="0.0" y="88" width="414" height="56"/>
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="35M-1v-GqU">
+                                <rect key="frame" x="8" y="88" width="398" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="bqM-aq-3OE"/>
+                                </connections>
                             </searchBar>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="CoC-9I-GXH" firstAttribute="top" secondItem="35M-1v-GqU" secondAttribute="bottom" id="52s-bU-RpK"/>
-                            <constraint firstItem="CoC-9I-GXH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Mnl-bU-bO8"/>
-                            <constraint firstItem="35M-1v-GqU" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="Wiz-uo-cF1"/>
+                            <constraint firstItem="CoC-9I-GXH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="Mnl-bU-bO8"/>
+                            <constraint firstItem="35M-1v-GqU" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-8" id="Wiz-uo-cF1"/>
                             <constraint firstItem="CoC-9I-GXH" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="dGl-Fj-gZF"/>
-                            <constraint firstItem="35M-1v-GqU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="fSs-xm-dF0"/>
+                            <constraint firstItem="35M-1v-GqU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="fSs-xm-dF0"/>
                             <constraint firstItem="35M-1v-GqU" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="haC-9Q-vCG"/>
-                            <constraint firstItem="CoC-9I-GXH" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="vW0-dw-D9P"/>
+                            <constraint firstItem="CoC-9I-GXH" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-8" id="vW0-dw-D9P"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="58B-tg-tq6"/>
+                    <connections>
+                        <outlet property="searchBar" destination="35M-1v-GqU" id="TlT-xA-XCq"/>
+                        <outlet property="tableView" destination="CoC-9I-GXH" id="gUL-dZ-hFb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

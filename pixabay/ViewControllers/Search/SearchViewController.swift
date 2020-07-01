@@ -17,31 +17,64 @@ class SearchViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        self.title = viewModel.title
+        setupTableView()
+        registerCells()
+    }
+    
+    func setupTableView() {
+        
+        guard self.tableView != nil else { return }
+        
+        /// using automatic cell height, will calculate by intrinsic value
+        tableView.estimatedRowHeight = 1
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.separatorStyle = .none
+    }
+    
+    /// register table cells
+    func registerCells() {
+        guard self.tableView != nil else { return }
+        let cellIdentifier = ImageViewCell.cellIdentifier
+        let nib = UINib(nibName: cellIdentifier, bundle: nil)
+        self.tableView.register(nib, forCellReuseIdentifier: cellIdentifier)
+    }
+    
+    func refresh() {
+        DispatchQueue.main.async {
+            self.tableView.reloadData()
+        }
     }
 }
 
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        0
+        viewModel.data.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cellModel = viewModel.data[indexPath.row]
+        let cell: BaseTableViewCell = tableView.dequeueReusableCell(withIdentifier: cellModel.identifier, for: indexPath) as! BaseTableViewCell
+        cell.setupUI(cellModel)
+        return cell
     }
     
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
             if viewModel.needMore(for: indexPath.row) {
-                viewModel.loadMore() {
-                    tableView.reloadData()
+                viewModel.loadMore { [weak self] result in
+                    guard let self = self else { return }
+                    switch result {
+                    case .failure(let err):
+                        self.alertError(err)
+                    case .success:
+                        self.refresh()
+                    }
                 }
                 return
             }
         }
     }
-    
-    
 }
 
 extension SearchViewController: UISearchBarDelegate {
@@ -51,6 +84,16 @@ extension SearchViewController: UISearchBarDelegate {
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        guard let text = searchBar.text else { return }
+        viewModel.search(text) { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case .success:
+                self.refresh()
+            case .failure(let err):
+                self.alertError(err)
+            }
+        }
     }
 }
 
