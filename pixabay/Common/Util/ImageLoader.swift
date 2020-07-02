@@ -11,7 +11,7 @@ import UIKit
 class ImageLoader {
     
     static let shared = ImageLoader()
-    let cache: ImageCacheProtocol = ImageNSCache()
+    let cache: ImageCacheProtocol = ImageDictionaryCache()
     private init() { }
     
     func loadImage(from urlString: String, completionHandler: @escaping (UIImage?)->Void) {
