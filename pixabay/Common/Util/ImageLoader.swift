@@ -32,8 +32,11 @@ class ImageLoader {
             guard let self = self else { return }
             guard let data = data else { return }
             guard let image = UIImage(data: data) else { completionHandler(nil); return }
-            self.cache.cacheImage(by: urlString, image: image)
-            completionHandler(image)
+            
+            /// make sure caching is completed before completing
+            self.cache.cacheImage(by: urlString, image: image) {
+                completionHandler(image)
+            }
             
         }
         dataTask.resume()

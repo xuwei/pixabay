@@ -11,6 +11,7 @@ import UIKit
 class ImageViewCell: UITableViewCell {
     
     static var cellIdentifier: String = "ImageViewCell"
+    let cornerRadius: CGFloat = 4.0
     
     @IBOutlet weak var cellImage: UIImageView!
     @IBOutlet weak var user: UILabel!
@@ -19,7 +20,7 @@ class ImageViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        cellImage.layer.cornerRadius = 4.0
+        cellImage.layer.cornerRadius = cornerRadius
     }
     
     func setupUI(_ viewModel: BaseTableViewModelProtocol) {

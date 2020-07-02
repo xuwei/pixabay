@@ -19,7 +19,7 @@ class ImageDictionaryCache: ImageCacheProtocol {
     private var nextIndexToAdd = 0
     private var oldestIndex = 0
     
-    /// we create a serial queue for caching operations
+    /// we use same queue for caching operations
     /// to ensure all operations on imageCache is through one queue
     private let queue = DispatchQueue(label: "ImageDictionaryCache")
     
@@ -28,7 +28,7 @@ class ImageDictionaryCache: ImageCacheProtocol {
         history.reserveCapacity(cacheSize)
     }
     
-    func cacheImage(by key: String, image: UIImage) {
+    func cacheImage(by key: String, image: UIImage, completionHandler: @escaping (()->Void)) {
         queue.async { [weak self] in
             guard let self = self else { return }
             if self.imageCache.count == self.cacheSize {
@@ -39,6 +39,8 @@ class ImageDictionaryCache: ImageCacheProtocol {
                 /// before the cacheSize is filled up, we simply add new
                 self.addNew(key, image)
             }
+            
+            completionHandler()
         }
     }
     

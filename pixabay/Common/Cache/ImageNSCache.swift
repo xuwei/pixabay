@@ -16,8 +16,9 @@ class ImageNSCache: ImageCacheProtocol {
         imageCache.countLimit = cacheSize
     }
     
-    func cacheImage(by key: String, image: UIImage) {
+    func cacheImage(by key: String, image: UIImage, completionHandler: @escaping (()->Void)) {
         imageCache.setObject(image, forKey: key as NSString)
+        completionHandler()
     }
     
     func loadImage(by key: String) -> UIImage? {

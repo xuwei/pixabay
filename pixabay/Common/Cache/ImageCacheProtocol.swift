@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ImageCacheProtocol {
-    func cacheImage(by key: String, image: UIImage)
+    func cacheImage(by key: String, image: UIImage, completionHandler: @escaping (()-> Void))
     func loadImage(by key: String)->UIImage?
     func printInfo()
 }

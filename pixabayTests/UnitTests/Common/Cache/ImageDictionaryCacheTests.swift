@@ -20,7 +20,7 @@ class ImageDictionaryCacheTests: XCTestCase {
     func testCachingLessThanMax() {
         let cache = ImageDictionaryCache()
         for key in 0..<50 {
-            cache.cacheImage(by: String(key), image: UIImage())
+            cache.cacheImage(by: String(key), image: UIImage()) {}
         }
         cache.printInfo()
         let oldestKey = cache.oldestKey()
@@ -35,7 +35,7 @@ class ImageDictionaryCacheTests: XCTestCase {
     func testCachingMoreThanMax() {
         let cache = ImageDictionaryCache()
         for key in 0..<101 {
-            cache.cacheImage(by: String(key), image: UIImage())
+            cache.cacheImage(by: String(key), image: UIImage()) {}
         }
         cache.printInfo()
         let oldestKey = cache.oldestKey()
@@ -49,7 +49,7 @@ class ImageDictionaryCacheTests: XCTestCase {
     func testCachingMoreThanMax2() {
         let cache = ImageDictionaryCache()
         for i in 0..<200 {
-            cache.cacheImage(by: String(i), image: UIImage())
+            cache.cacheImage(by: String(i), image: UIImage()) {}
         }
         cache.printInfo()
         let oldestKey = cache.oldestKey()
@@ -62,7 +62,7 @@ class ImageDictionaryCacheTests: XCTestCase {
     func testCachingMoreThanMax3() {
         let cache = ImageDictionaryCache()
         for i in 0..<1000 {
-            cache.cacheImage(by: String(i), image: UIImage())
+            cache.cacheImage(by: String(i), image: UIImage()) {}
         }
         cache.printInfo()
         let oldestKey = cache.oldestKey()
@@ -76,7 +76,7 @@ class ImageDictionaryCacheTests: XCTestCase {
         let expectation = XCTestExpectation(description: "testCacheClear")
         let cache = ImageDictionaryCache()
         for i in 0..<999 {
-            cache.cacheImage(by: String(i), image: UIImage())
+            cache.cacheImage(by: String(i), image: UIImage()) {}
         }
         cache.clear() {
             let oldestKey = cache.oldestKey()
@@ -100,11 +100,32 @@ class ImageDictionaryCacheTests: XCTestCase {
     func testLoadInvalidKey2() {
         let cache = ImageDictionaryCache()
         for i in 0..<50 {
-            cache.cacheImage(by: String(i), image: UIImage())
+            cache.cacheImage(by: String(i), image: UIImage()) {}
         }
         let result = cache.loadImage(by: "51")
         XCTAssertNil(result)
         XCTAssertTrue(cache.imageCacheSize() == 50)
         XCTAssertTrue(cache.historySize() == 50)
+    }
+    
+    /// in case of concurrently caching, the key sequence cached would not be exactly sequential
+    /// but mostly on the 9900-10000 range 
+    func testConcurrentCaching() {
+        let cache = ImageDictionaryCache()
+        // Do any additional setup after loading the view, typically from a nib.
+        let group = DispatchGroup()
+        DispatchQueue.concurrentPerform(iterations: 10000) { index in
+            group.enter()
+            cache.cacheImage(by: String(index), image: UIImage()) {
+                group.leave()
+            }
+            
+        }
+        
+        group.wait()
+        
+        cache.printInfo()
+        XCTAssertTrue(cache.imageCacheSize() == 100)
+        XCTAssertTrue(cache.historySize() == 100)
     }
 }
