@@ -33,6 +33,7 @@
 		9652B31B24AC95B70033EBE8 /* BaseTableViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9652B31A24AC95B70033EBE8 /* BaseTableViewModelProtocol.swift */; };
 		96A6B55724AD9DE100281533 /* ImageNSCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A6B55624AD9DE100281533 /* ImageNSCache.swift */; };
 		96A6B55924AD9DFD00281533 /* ImageCacheProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A6B55824AD9DFD00281533 /* ImageCacheProtocol.swift */; };
+		96A6B55F24ADB47E00281533 /* SearchViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A6B55E24ADB47E00281533 /* SearchViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		9652B31A24AC95B70033EBE8 /* BaseTableViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewModelProtocol.swift; sourceTree = "<group>"; };
 		96A6B55624AD9DE100281533 /* ImageNSCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageNSCache.swift; sourceTree = "<group>"; };
 		96A6B55824AD9DFD00281533 /* ImageCacheProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheProtocol.swift; sourceTree = "<group>"; };
+		96A6B55E24ADB47E00281533 /* SearchViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -249,6 +251,7 @@
 		9652B30024AC4ADB0033EBE8 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
+				96A6B55B24ADB46800281533 /* ViewControllers */,
 				96234A0E24ACD0BD00AAA84A /* Common */,
 			);
 			path = UnitTests;
@@ -322,6 +325,30 @@
 				9652B2FB24AC37CE0033EBE8 /* ScreenName.swift */,
 			);
 			path = Enums;
+			sourceTree = "<group>";
+		};
+		96A6B55B24ADB46800281533 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				96A6B55C24ADB46800281533 /* Search */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		96A6B55C24ADB46800281533 /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				96A6B55D24ADB46800281533 /* ViewModel */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		96A6B55D24ADB46800281533 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				96A6B55E24ADB47E00281533 /* SearchViewModelTests.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -454,6 +481,7 @@
 			files = (
 				9652B30624AC4D500033EBE8 /* XCTestConfig.swift in Sources */,
 				96234A1124ACD0D700AAA84A /* ImageDictionaryCacheTests.swift in Sources */,
+				96A6B55F24ADB47E00281533 /* SearchViewModelTests.swift in Sources */,
 				9652B30424AC4B020033EBE8 /* PixaAPItests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -646,7 +674,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KYEZ379B3G;
 				INFOPLIST_FILE = pixabayTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -668,7 +696,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = KYEZ379B3G;
 				INFOPLIST_FILE = pixabayTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

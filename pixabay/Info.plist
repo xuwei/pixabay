@@ -63,27 +63,17 @@
     <key>NSAppTransportSecurity</key>
     <dict>
         <key>NSAllowsArbitraryLoads</key>
-        <true/>
+        <false/>
         <key>NSExceptionDomains</key>
         <dict>
-            <key>pixbay.com</key>
+            <key>pixabay.com</key>
             <dict>
             <key>NSIncludesSubdomains</key>
                 <true/>
             <key>NSExceptionAllowInsecureHTTPSLoads</key>
                 <true/>
-            <key>NSExceptionRequiresForwardSecrecy</key>
+            <key>NSTemporaryThirdPartyExceptionAllowsInsecureHTTPLoads</key>
                 <true/>
-            <key>NSExceptionMinimumTLSVersion</key>
-                <string>TLSv1.1</string>
-            <key>NSThirdPartyExceptionAllowInsecureHTTPSLoads</key>
-                <true/>
-            <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
-                <false/>
-            <key>NSThirdPartyExceptionMinimumTLSVersion</key>
-                <string>TLSv1.1</string>
-            <key>NSRequiresCertificateTransparency</key>
-                <false/>
             </dict>
         </dict>
     </dict>

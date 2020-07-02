@@ -19,7 +19,7 @@ class ImageDictionaryCache: ImageCacheProtocol {
     private var nextIndexToAdd = 0
     private var oldestIndex = 0
     
-    /// we create a queue for caching operations
+    /// we create a serial queue for caching operations
     /// to ensure all operations on imageCache is through one queue
     private let queue = DispatchQueue(label: "ImageDictionaryCache")
     

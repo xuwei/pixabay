@@ -23,6 +23,8 @@ class ImageLoader {
             return
         }
         
+        
+        self.cache.printInfo()
         /// otherwise we fetch from url
         guard let url = URL(string: urlString) else { return }
         let session: URLSession = URLSession(configuration: .default)

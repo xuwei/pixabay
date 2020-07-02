@@ -19,13 +19,8 @@ class SearchViewModel {
     var prevKeyword = ""
     
     /// closure for array map to transform PixaImageModel to cell models
-    let transformToCellViewModel: ((PixaImageModel)-> ImageViewCellViewModel) = { model in
+    private let transformToCellViewModel: ((PixaImageModel)-> ImageViewCellViewModel) = { model in
         return ImageViewCellViewModel(imageUrl: model.webformatURL, user: model.user, tags: model.tags)
-    }
-    
-    func needMore(for index: Int)-> Bool {
-        if index >= total { return false }
-        return index >= (self.data.count - 1) ? true : false
     }
     
     func loadMore(_ completionHandler: @escaping ((Result<[ImageViewCellViewModel], PixaAPIError>)->Void)) {
@@ -72,10 +67,12 @@ class SearchViewModel {
 extension SearchViewModel {
     /// if user clears the search bar, we use this method to clear the photos
     private func clear() {
-        self.data = []
+        data = []
         /// reseting query values
-        self.pageNo = 1
-        self.prevKeyword = ""
+        pageNo = 1
+        prevKeyword = ""
+        total = 0
+        numOfPages = 0
     }
     
     /// if user didn't change the search bar text, we don't need to search again
@@ -84,7 +81,10 @@ extension SearchViewModel {
     }
     
     /// calculate total number of pages needed
-    private func calcTotalPages(total: Int, pageSize: Int)->Int {
+    func calcTotalPages(total: Int, pageSize: Int)->Int {
+        guard pageSize > 0 else { return 0 }
+        guard total > 0 else { return 0 }
+        
         let remainingPage = (total % pageSize == 0) ? 0 : 1
         // calculate total number of pages we need to cover the total
         let numOfPages = total / pageSize + remainingPage
@@ -97,9 +97,9 @@ extension SearchViewModel {
        return pageNo == numOfPages ? true : false
     }
        
-    /// another helper method to validate conditions for incrementing page
-    private func needToLoadMore(_ index: Int)-> Bool    {
-       if index >= total { return false }
-       return (index >= self.data.count - 1) ? true : false
+    /// helper method to validate conditions for incrementing page
+    func needMore(for index: Int)-> Bool {
+        if index >= total { return false }
+        return index >= (self.data.count - 1) ? true : false
     }
 }
