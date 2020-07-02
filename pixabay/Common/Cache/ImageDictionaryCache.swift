@@ -18,7 +18,6 @@ class ImageDictionaryCache: ImageCacheProtocol {
     private var history = [String]()
     private var imageCache = Dictionary<String, UIImage>()
     private var nextIndexToAdd = 0
-    private var oldestIndex = 0
     
     /// we use same queue for caching operations
     /// to ensure all operations on imageCache is through one queue
@@ -32,15 +31,7 @@ class ImageDictionaryCache: ImageCacheProtocol {
     func cacheImage(by key: String, image: UIImage, completionHandler: @escaping (()->Void)) {
         queue.async { [weak self] in
             guard let self = self else { return }
-            if self.imageCache.count == self.cacheSize {
-                /// once cacheSize have reached, we start removing oldest as we add new
-                self.removeOldest()
-                self.addNew(key, image)
-            } else {
-                /// before the cacheSize is filled up, we simply add new
-                self.addNew(key, image)
-            }
-            
+            self.addNew(key, image)
             completionHandler()
         }
     }
@@ -48,7 +39,10 @@ class ImageDictionaryCache: ImageCacheProtocol {
     /// helper method to return which key is oldest
     func oldestKey()-> String {
         if history.isEmpty { return "" }
-        return history[oldestIndex]
+        if history.count <= cacheSize { return history[0] }
+        
+        /// oldest is the next to be replace
+        return history[nextIndexToAdd]
     }
     
     /// return key of the newest item
@@ -66,7 +60,6 @@ class ImageDictionaryCache: ImageCacheProtocol {
     /// to reset the cache
     func clear(_ completionHandler: (()->Void)?) {
         queue.async {
-            self.oldestIndex = 0
             self.nextIndexToAdd = 0
             self.imageCache.removeAll()
             self.history.removeAll()
@@ -79,27 +72,21 @@ class ImageDictionaryCache: ImageCacheProtocol {
     func loadImage(by key: String)->UIImage? {
         return imageCache[key]
     }
-       
-    /// removes the oldest item from imageCache map
-    private func removeOldest() {
-        imageCache.removeValue(forKey: oldestKey())
-    }
     
     /// whenever we have new image to cache, we use this method
     private func addNew(_ key: String, _ image: UIImage) {
-        /// When we filled up the cache size, we start updating both newest index and oldest index
-        /// To create a circular queue
-        if (history.count == cacheSize) {
-            history[nextIndexToAdd] = key
-            imageCache[key] = image
-            nextIndexToAdd = (nextIndexToAdd + 1) % cacheSize
-            oldestIndex = (oldestIndex + 1) % cacheSize
-        } else {
-            /// before cache is filled up, simply add, oldestIndex remains 0
+        if loadImage(by: key) != nil { return }
+        if nextIndexToAdd < history.count { nextIndexToAdd = nextIndexToAdd % history.count }
+        if history.count < cacheSize {
             history.append(key)
             imageCache[key] = image
-            nextIndexToAdd = history.count % cacheSize
+        } else {
+            let keyToBeReplaced = history[nextIndexToAdd]
+            imageCache.removeValue(forKey: keyToBeReplaced)
+            history[nextIndexToAdd] = key
         }
+        imageCache[key] = image
+        nextIndexToAdd = (nextIndexToAdd + 1) % cacheSize
     }
 }
 

@@ -11,8 +11,15 @@ import UIKit
 class ImageLoader {
     
     static let shared = ImageLoader()
-    let cache: ImageCacheProtocol = ImageDictionaryCache()
-    private init() { }
+    let maxConcurrentReq = 1
+    private let cache: ImageCacheProtocol = ImageDictionaryCache()
+    private var imageLoaderSession: URLSession?
+    private var imageLoaderOperationQueue = OperationQueue()
+    
+    private init() {
+        imageLoaderOperationQueue.maxConcurrentOperationCount = maxConcurrentReq
+        imageLoaderSession = URLSession(configuration: .default, delegate: nil, delegateQueue: imageLoaderOperationQueue)
+    }
     
     func loadImage(from urlString: String, completionHandler: @escaping (UIImage?)->Void) {
        
@@ -23,12 +30,11 @@ class ImageLoader {
             return
         }
         
-        
         self.cache.printInfo()
         /// otherwise we fetch from url
         guard let url = URL(string: urlString) else { return }
-        let session: URLSession = URLSession(configuration: .default)
-        let dataTask = session.dataTask(with: url) { [weak self] data, _, _ in
+        
+        let dataTask = imageLoaderSession?.dataTask(with: url) { [weak self] data, _, _ in
             guard let self = self else { return }
             guard let data = data else { return }
             guard let image = UIImage(data: data) else { completionHandler(nil); return }
@@ -39,6 +45,6 @@ class ImageLoader {
             }
             
         }
-        dataTask.resume()
+        dataTask?.resume()
     }
 }
