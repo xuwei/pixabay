@@ -8,9 +8,10 @@
 
 import UIKit
 
+/// ImageNSCache leverages on NSCache instead of Dictionary
 class ImageNSCache: ImageCacheProtocol {
     
-    private var imageCache = NSCache<NSString, AnyObject>()
+    private var imageCache = NSCache<NSString, UIImage>()
     
     init(_ cacheSize: Int = 100) {
         imageCache.countLimit = cacheSize
@@ -22,10 +23,10 @@ class ImageNSCache: ImageCacheProtocol {
     }
     
     func loadImage(by key: String) -> UIImage? {
-        return imageCache.object(forKey: key as NSString) as? UIImage
+        return imageCache.object(forKey: key as NSString)
     }
     
     func printInfo() {
-        print("\(imageCache.debugDescription)")
+        print(imageCache.debugDescription)
     }
 }

@@ -109,7 +109,7 @@ class ImageDictionaryCacheTests: XCTestCase {
     }
     
     /// in case of concurrently caching, the key sequence cached would not be exactly sequential
-    /// but mostly on the 9900-10000 range 
+    /// but mostly on the 9900-10000 range
     func testConcurrentCaching() {
         let cache = ImageDictionaryCache()
         // Do any additional setup after loading the view, typically from a nib.

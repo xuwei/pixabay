@@ -6,6 +6,7 @@
 //  Copyright © 2020 Wisetree Solutions Pty Ltd. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
 /// O(1) to remove oldest using circular queue indexing
@@ -15,7 +16,7 @@ class ImageDictionaryCache: ImageCacheProtocol {
     
     private let cacheSize = 100
     private var history = [String]()
-    private var imageCache = [String: UIImage]()
+    private var imageCache = Dictionary<String, UIImage>()
     private var nextIndexToAdd = 0
     private var oldestIndex = 0
     
