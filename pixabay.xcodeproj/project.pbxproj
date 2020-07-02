@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		960C9A8924AD3F0600E3EC42 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 960C9A8824AD3F0600E3EC42 /* ImageLoader.swift */; };
-		96234A0D24ACC87300AAA84A /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96234A0C24ACC87300AAA84A /* ImageCache.swift */; };
-		96234A1124ACD0D700AAA84A /* ImageCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96234A1024ACD0D700AAA84A /* ImageCacheTests.swift */; };
+		96234A0D24ACC87300AAA84A /* ImageDictionaryCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96234A0C24ACC87300AAA84A /* ImageDictionaryCache.swift */; };
+		96234A1124ACD0D700AAA84A /* ImageDictionaryCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96234A1024ACD0D700AAA84A /* ImageDictionaryCacheTests.swift */; };
 		96234A1324ACDE4200AAA84A /* UIViewController+Keyboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96234A1224ACDE4200AAA84A /* UIViewController+Keyboard.swift */; };
 		9652B2C824AC2DAD0033EBE8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9652B2C724AC2DAD0033EBE8 /* AppDelegate.swift */; };
 		9652B2CA24AC2DAD0033EBE8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9652B2C924AC2DAD0033EBE8 /* SceneDelegate.swift */; };
@@ -31,6 +31,8 @@
 		9652B31224AC76C60033EBE8 /* ImageViewCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9652B31124AC76C60033EBE8 /* ImageViewCellViewModel.swift */; };
 		9652B31524AC92960033EBE8 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9652B31424AC92960033EBE8 /* UIViewController+Alert.swift */; };
 		9652B31B24AC95B70033EBE8 /* BaseTableViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9652B31A24AC95B70033EBE8 /* BaseTableViewModelProtocol.swift */; };
+		96A6B55724AD9DE100281533 /* ImageNSCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A6B55624AD9DE100281533 /* ImageNSCache.swift */; };
+		96A6B55924AD9DFD00281533 /* ImageCacheProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A6B55824AD9DFD00281533 /* ImageCacheProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,8 +47,8 @@
 
 /* Begin PBXFileReference section */
 		960C9A8824AD3F0600E3EC42 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
-		96234A0C24ACC87300AAA84A /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
-		96234A1024ACD0D700AAA84A /* ImageCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheTests.swift; sourceTree = "<group>"; };
+		96234A0C24ACC87300AAA84A /* ImageDictionaryCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDictionaryCache.swift; sourceTree = "<group>"; };
+		96234A1024ACD0D700AAA84A /* ImageDictionaryCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDictionaryCacheTests.swift; sourceTree = "<group>"; };
 		96234A1224ACDE4200AAA84A /* UIViewController+Keyboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Keyboard.swift"; sourceTree = "<group>"; };
 		9652B2C424AC2DAD0033EBE8 /* pixabay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pixabay.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9652B2C724AC2DAD0033EBE8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -72,6 +74,8 @@
 		9652B31124AC76C60033EBE8 /* ImageViewCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageViewCellViewModel.swift; sourceTree = "<group>"; };
 		9652B31424AC92960033EBE8 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		9652B31A24AC95B70033EBE8 /* BaseTableViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewModelProtocol.swift; sourceTree = "<group>"; };
+		96A6B55624AD9DE100281533 /* ImageNSCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageNSCache.swift; sourceTree = "<group>"; };
+		96A6B55824AD9DFD00281533 /* ImageCacheProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,7 +115,7 @@
 		96234A0F24ACD0C400AAA84A /* Cache */ = {
 			isa = PBXGroup;
 			children = (
-				96234A1024ACD0D700AAA84A /* ImageCacheTests.swift */,
+				96234A1024ACD0D700AAA84A /* ImageDictionaryCacheTests.swift */,
 			);
 			path = Cache;
 			sourceTree = "<group>";
@@ -119,7 +123,9 @@
 		9628431424ACC1CB00A0F95F /* Cache */ = {
 			isa = PBXGroup;
 			children = (
-				96234A0C24ACC87300AAA84A /* ImageCache.swift */,
+				96A6B55824AD9DFD00281533 /* ImageCacheProtocol.swift */,
+				96234A0C24ACC87300AAA84A /* ImageDictionaryCache.swift */,
+				96A6B55624AD9DE100281533 /* ImageNSCache.swift */,
 			);
 			path = Cache;
 			sourceTree = "<group>";
@@ -422,17 +428,19 @@
 			files = (
 				9652B2CC24AC2DAD0033EBE8 /* SearchViewController.swift in Sources */,
 				9652B31B24AC95B70033EBE8 /* BaseTableViewModelProtocol.swift in Sources */,
-				96234A0D24ACC87300AAA84A /* ImageCache.swift in Sources */,
+				96234A0D24ACC87300AAA84A /* ImageDictionaryCache.swift in Sources */,
 				9652B2F224AC331C0033EBE8 /* PixaAPI.swift in Sources */,
 				9652B2C824AC2DAD0033EBE8 /* AppDelegate.swift in Sources */,
 				9652B2FE24AC38D10033EBE8 /* PixaAPISearchReq.swift in Sources */,
 				9652B2F024AC30F00033EBE8 /* SearchViewModel.swift in Sources */,
+				96A6B55924AD9DFD00281533 /* ImageCacheProtocol.swift in Sources */,
 				960C9A8924AD3F0600E3EC42 /* ImageLoader.swift in Sources */,
 				9652B31224AC76C60033EBE8 /* ImageViewCellViewModel.swift in Sources */,
 				9652B2F824AC35460033EBE8 /* PixaImageModel.swift in Sources */,
 				9652B31524AC92960033EBE8 /* UIViewController+Alert.swift in Sources */,
 				9652B2FA24AC35A30033EBE8 /* PixaSearchResultModel.swift in Sources */,
 				96234A1324ACDE4200AAA84A /* UIViewController+Keyboard.swift in Sources */,
+				96A6B55724AD9DE100281533 /* ImageNSCache.swift in Sources */,
 				9652B2CA24AC2DAD0033EBE8 /* SceneDelegate.swift in Sources */,
 				9652B2F524AC340C0033EBE8 /* PixaAPIError.swift in Sources */,
 				9652B30A24AC6F640033EBE8 /* ImageViewCell.swift in Sources */,
@@ -445,7 +453,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9652B30624AC4D500033EBE8 /* XCTestConfig.swift in Sources */,
-				96234A1124ACD0D700AAA84A /* ImageCacheTests.swift in Sources */,
+				96234A1124ACD0D700AAA84A /* ImageDictionaryCacheTests.swift in Sources */,
 				9652B30424AC4B020033EBE8 /* PixaAPItests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

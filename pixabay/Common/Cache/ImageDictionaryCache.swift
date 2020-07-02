@@ -11,16 +11,15 @@ import UIKit
 /// O(1) to remove oldest using circular queue indexing
 /// O(1) to insert
 /// O(1) to lookup by map
-class ImageCache {
+class ImageDictionaryCache: ImageCacheProtocol {
     
-    static let shared = ImageCache()
     private let cacheSize = 100
     private var history = [String]()
     private var imageCache = [String: UIImage]()
     private var nextIndexToAdd = 0
     private var oldestIndex = 0
     
-    private init() {
+    init() {
         imageCache.reserveCapacity(cacheSize)
         history.reserveCapacity(cacheSize)
     }
@@ -68,14 +67,6 @@ class ImageCache {
     func loadImage(by key: String)->UIImage? {
         return imageCache[key]
     }
-    
-    /// print method for debugging purpose
-    func printInfo() {
-       print(history)
-       print(imageCache)
-       print("history count: \(history.count)")
-       print("cache items count: \(imageCache.count)")
-    }
        
     /// removes the oldest item from imageCache map
     private func removeOldest() {
@@ -85,7 +76,7 @@ class ImageCache {
     /// whenever we have new image to cache, we use this method
     private func addNew(_ key: String, _ image: UIImage) {
         /// When we filled up the cache size, we start updating both newest index and oldest index
-        /// To create a circular queue 
+        /// To create a circular queue
         if (history.count == cacheSize) {
             history[nextIndexToAdd] = key
             imageCache[key] = image
@@ -97,5 +88,25 @@ class ImageCache {
             imageCache[key] = image
             nextIndexToAdd = history.count % cacheSize
         }
+    }
+}
+
+/// helper methods for debugging
+extension ImageDictionaryCache {
+    
+    func imageCacheSize()->Int {
+        return imageCache.count
+    }
+
+    func historySize()->Int {
+        return history.count
+    }
+
+    /// print method for debugging purpose
+    func printInfo() {
+       print(history)
+       print(imageCache)
+       print("history count: \(history.count)")
+       print("cache items count: \(imageCache.count)")
     }
 }

@@ -11,17 +11,13 @@ import UIKit
 class ImageLoader {
     
     static let shared = ImageLoader()
-    var queue = OperationQueue()
-    private init() {
-        // limit the amount of concurrent operation to 1 for simplicity 
-        queue.name = "ImageLoaderQueue"
-        queue.maxConcurrentOperationCount = 1
-    }
+    let cache: ImageCacheProtocol = ImageNSCache()
+    private init() { }
     
     func loadImage(from urlString: String, completionHandler: @escaping (UIImage?)->Void) {
        
         /// check with ImageCache first
-        let cachedImage = ImageCache.shared.loadImage(by: urlString)
+        let cachedImage = cache.loadImage(by: urlString)
         if cachedImage != nil {
             completionHandler(cachedImage)
             return
@@ -30,11 +26,11 @@ class ImageLoader {
         /// otherwise we fetch from url
         guard let url = URL(string: urlString) else { return }
         let session: URLSession = URLSession(configuration: .default)
-        ImageCache.shared.printInfo()
-        let dataTask = session.dataTask(with: url) { data, _, _ in
+        let dataTask = session.dataTask(with: url) { [weak self] data, _, _ in
+            guard let self = self else { return }
             guard let data = data else { return }
             guard let image = UIImage(data: data) else { completionHandler(nil); return }
-            ImageCache.shared.cacheImage(by: urlString, image: image)
+            self.cache.cacheImage(by: urlString, image: image)
             completionHandler(image)
             
         }
