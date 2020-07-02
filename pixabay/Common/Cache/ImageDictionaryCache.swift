@@ -19,19 +19,26 @@ class ImageDictionaryCache: ImageCacheProtocol {
     private var nextIndexToAdd = 0
     private var oldestIndex = 0
     
+    /// we create a queue for caching operations
+    /// to ensure all operations on imageCache is through one queue
+    private let queue = DispatchQueue(label: "ImageDictionaryCache")
+    
     init() {
         imageCache.reserveCapacity(cacheSize)
         history.reserveCapacity(cacheSize)
     }
     
     func cacheImage(by key: String, image: UIImage) {
-        if imageCache.count == cacheSize {
-            /// once cacheSize have reached, we start removing oldest as we add new
-            removeOldest()
-            addNew(key, image)
-        } else {
-            /// before the cacheSize is filled up, we simply add new
-            addNew(key, image)
+        queue.async { [weak self] in
+            guard let self = self else { return }
+            if self.imageCache.count == self.cacheSize {
+                /// once cacheSize have reached, we start removing oldest as we add new
+                self.removeOldest()
+                self.addNew(key, image)
+            } else {
+                /// before the cacheSize is filled up, we simply add new
+                self.addNew(key, image)
+            }
         }
     }
     
@@ -54,13 +61,15 @@ class ImageDictionaryCache: ImageCacheProtocol {
     }
     
     /// to reset the cache
-    func clear() {
-        oldestIndex = 0
-        nextIndexToAdd = 0
-        imageCache = [String: UIImage]()
-        history = [String]()
-        imageCache.reserveCapacity(cacheSize)
-        history.reserveCapacity(cacheSize)
+    func clear(_ completionHandler: (()->Void)?) {
+        queue.async {
+            self.oldestIndex = 0
+            self.nextIndexToAdd = 0
+            self.imageCache.removeAll()
+            self.history.removeAll()
+            guard let completion = completionHandler else { return }
+            completion()
+        }
     }
     
     /// load image from cache

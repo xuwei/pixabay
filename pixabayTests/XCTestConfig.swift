@@ -11,4 +11,5 @@ import Foundation
 class XCTestConfig {
     static let shared = XCTestConfig()
     let integrationTestTimeout = 120.0
+    let unitTestTimeout = 20.0
 }

@@ -73,15 +73,20 @@ class ImageDictionaryCacheTests: XCTestCase {
     }
     
     func testCacheClear() {
+        let expectation = XCTestExpectation(description: "testCacheClear")
         let cache = ImageDictionaryCache()
         for i in 0..<999 {
             cache.cacheImage(by: String(i), image: UIImage())
         }
-        cache.clear()
-        let oldestKey = cache.oldestKey()
-        XCTAssertTrue(oldestKey == "")
-        XCTAssertTrue(cache.imageCacheSize() == 0)
-        XCTAssertTrue(cache.historySize() == 0)
+        cache.clear() {
+            let oldestKey = cache.oldestKey()
+            XCTAssertTrue(oldestKey == "")
+            XCTAssertTrue(cache.imageCacheSize() == 0)
+            XCTAssertTrue(cache.historySize() == 0)
+            expectation.fulfill()
+        }
+        
+        wait(for: [expectation], timeout: XCTestConfig.shared.unitTestTimeout)
     }
     
     func testLoadInvalidKey() {
