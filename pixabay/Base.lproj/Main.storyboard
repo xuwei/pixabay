@@ -32,21 +32,44 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="bqM-aq-3OE"/>
                                 </connections>
                             </searchBar>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Results" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H10-m5-dgv">
+                                <rect key="frame" x="16" y="176" width="382" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="gL8-x8-Y9m"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="s2J-xy-mah">
+                                <rect key="frame" x="16" y="176" width="382" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="ZNv-9l-xOV"/>
+                                </constraints>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
                             <constraint firstItem="CoC-9I-GXH" firstAttribute="top" secondItem="35M-1v-GqU" secondAttribute="bottom" id="52s-bU-RpK"/>
+                            <constraint firstItem="H10-m5-dgv" firstAttribute="leading" secondItem="CoC-9I-GXH" secondAttribute="leading" id="5yB-pw-G1N"/>
                             <constraint firstItem="CoC-9I-GXH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Mnl-bU-bO8"/>
+                            <constraint firstItem="H10-m5-dgv" firstAttribute="top" secondItem="CoC-9I-GXH" secondAttribute="top" constant="32" id="WFX-k1-DdZ"/>
                             <constraint firstItem="35M-1v-GqU" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-8" id="Wiz-uo-cF1"/>
+                            <constraint firstItem="s2J-xy-mah" firstAttribute="leading" secondItem="H10-m5-dgv" secondAttribute="leading" id="XzZ-Ms-aXb"/>
+                            <constraint firstItem="s2J-xy-mah" firstAttribute="trailing" secondItem="H10-m5-dgv" secondAttribute="trailing" id="cLR-PN-BU3"/>
                             <constraint firstItem="CoC-9I-GXH" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="dGl-Fj-gZF"/>
                             <constraint firstItem="35M-1v-GqU" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="8" id="fSs-xm-dF0"/>
                             <constraint firstItem="35M-1v-GqU" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="haC-9Q-vCG"/>
+                            <constraint firstItem="s2J-xy-mah" firstAttribute="top" secondItem="H10-m5-dgv" secondAttribute="top" id="nFH-cB-qYz"/>
                             <constraint firstItem="CoC-9I-GXH" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" constant="-16" id="vW0-dw-D9P"/>
+                            <constraint firstItem="H10-m5-dgv" firstAttribute="trailing" secondItem="CoC-9I-GXH" secondAttribute="trailing" id="wgb-qW-6ER"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" id="58B-tg-tq6"/>
                     <connections>
+                        <outlet property="loadingIndicator" destination="s2J-xy-mah" id="npd-OP-nLn"/>
+                        <outlet property="noResultLabel" destination="H10-m5-dgv" id="U2z-bK-hVN"/>
                         <outlet property="searchBar" destination="35M-1v-GqU" id="TlT-xA-XCq"/>
                         <outlet property="tableView" destination="CoC-9I-GXH" id="gUL-dZ-hFb"/>
                     </connections>

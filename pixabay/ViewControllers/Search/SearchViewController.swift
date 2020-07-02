@@ -10,10 +10,11 @@ import UIKit
 
 class SearchViewController: UIViewController {
     
+    @IBOutlet weak var noResultLabel: UILabel!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     var viewModel = SearchViewModel()
-    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,14 +47,33 @@ class SearchViewController: UIViewController {
             self.tableView.reloadData()
         }
     }
+    
+    func showLoading() {
+        noResultLabel.isHidden = true
+        loadingIndicator.startAnimating()
+    }
+    
+    func hideLoading() {
+        DispatchQueue.main.async {
+            self.loadingIndicator.stopAnimating()
+        }
+    }
+    
+    func showNoResult(_ show: Bool) {
+        noResultLabel.isHidden = !show
+    }
 }
 
+// MARK: UITableViewDelegate, UITableViewDataSource, UITableViewDataSourcePrefetching
 extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITableViewDataSourcePrefetching {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.data.count
+        let noResult = viewModel.data.count == 0 ? true : false
+        self.showNoResult(noResult)
+        return viewModel.data.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cellModel = viewModel.data[indexPath.row]
         let cell: ImageViewCell = tableView.dequeueReusableCell(withIdentifier: cellModel.identifier, for: indexPath) as! ImageViewCell
         cell.setupUI(cellModel)
@@ -78,6 +98,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITa
                     guard let self = self else { return }
                     switch result {
                     case .failure(let err):
+                        self.showNoResult(true)
                         self.alertError(with: err)
                     case .success:
                         self.refresh()
@@ -91,6 +112,8 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITa
     }
 }
 
+
+// MARK: UISearchBarDelegate
 extension SearchViewController: UISearchBarDelegate {
         
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -99,10 +122,12 @@ extension SearchViewController: UISearchBarDelegate {
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         guard let text = searchBar.text else { return }
+        showLoading()
         viewModel.search(text) { [weak self] result in
             guard let self = self else { return }
+            self.hideLoading()
             switch result {
-            case .success:
+            case .success(()):
                 self.refresh()
             case .failure(let err):
                 self.alertError(with: err)

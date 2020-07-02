@@ -11,7 +11,12 @@ import UIKit
 class ImageLoader {
     
     static let shared = ImageLoader()
-    private init() { }
+    var queue = OperationQueue()
+    private init() {
+        // limit the amount of concurrent operation to 1 for simplicity 
+        queue.name = "ImageLoaderQueue"
+        queue.maxConcurrentOperationCount = 1
+    }
     
     func loadImage(from urlString: String, completionHandler: @escaping (UIImage?)->Void) {
        
@@ -25,6 +30,7 @@ class ImageLoader {
         /// otherwise we fetch from url
         guard let url = URL(string: urlString) else { return }
         let session: URLSession = URLSession(configuration: .default)
+        ImageCache.shared.printInfo()
         let dataTask = session.dataTask(with: url) { data, _, _ in
             guard let data = data else { return }
             guard let image = UIImage(data: data) else { completionHandler(nil); return }

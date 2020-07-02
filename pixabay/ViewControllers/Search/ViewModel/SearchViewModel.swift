@@ -28,7 +28,7 @@ class SearchViewModel {
         return index >= (self.data.count - 1) ? true : false
     }
     
-    func loadMore(_ completionHandler: @escaping ((Result<Void, PixaAPIError>)->Void)) {
+    func loadMore(_ completionHandler: @escaping ((Result<[ImageViewCellViewModel], PixaAPIError>)->Void)) {
         guard isLastPage() == false else { return }
         pageNo = pageNo + 1
         let searchReq = PixaAPISearchReq(keywords: prevKeyword, pageSize: pageSize, pageNo: pageNo)
@@ -38,7 +38,7 @@ class SearchViewModel {
             case .success(let searchResult):
                 let newData = searchResult.images.map(self.transformToCellViewModel)
                 self.data = self.data + newData
-                completionHandler(.success(()))
+                completionHandler(.success(self.data))
             case .failure(let err):
                 completionHandler(.failure(err))
             }

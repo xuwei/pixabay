@@ -18,5 +18,30 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSExceptionDomains</key>
+        <dict>
+            <key>pixbay.com</key>
+            <dict>
+            <key>NSIncludesSubdomains</key>
+                <true/>
+            <key>NSExceptionAllowInsecureHTTPSLoads</key>
+                <true/>
+            <key>NSExceptionRequiresForwardSecrecy</key>
+                <true/>
+            <key>NSExceptionMinimumTLSVersion</key>
+                <string>TLSv1.1</string>
+            <key>NSThirdPartyExceptionAllowInsecureHTTPSLoads</key>
+                <true/>
+            <key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+                <false/>
+            <key>NSThirdPartyExceptionMinimumTLSVersion</key>
+                <string>TLSv1.1</string>
+            <key>NSRequiresCertificateTransparency</key>
+                <false/>
+            </dict>
+        </dict>
+    </dict>
 </dict>
 </plist>
