@@ -11,13 +11,16 @@ import UIKit
 class ImageLoader {
     
     static let shared = ImageLoader()
-    let maxConcurrentReq = 1
+    
+    /// keeping maximum of 3 concurrent task in queue
+    private let maxConcurrentReq = 3
     private let cache: ImageCacheProtocol = ImageDictionaryCache()
     private var imageLoaderSession: URLSession?
     private var imageLoaderOperationQueue = OperationQueue()
     
     private init() {
         imageLoaderOperationQueue.maxConcurrentOperationCount = maxConcurrentReq
+        imageLoaderOperationQueue.qualityOfService = .utility
         imageLoaderSession = URLSession(configuration: .default, delegate: nil, delegateQueue: imageLoaderOperationQueue)
     }
     
@@ -29,11 +32,10 @@ class ImageLoader {
             completionHandler(cachedImage)
             return
         }
-        
-        self.cache.printInfo()
         /// otherwise we fetch from url
         guard let url = URL(string: urlString) else { return }
         
+        /// dataTask is function variable, will get discarded
         let dataTask = imageLoaderSession?.dataTask(with: url) { [weak self] data, _, _ in
             guard let self = self else { return }
             guard let data = data else { return }
@@ -43,8 +45,8 @@ class ImageLoader {
             self.cache.cacheImage(by: urlString, image: image) {
                 completionHandler(image)
             }
-            
         }
+        
         dataTask?.resume()
     }
 }

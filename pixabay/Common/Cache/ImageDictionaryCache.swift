@@ -39,21 +39,22 @@ class ImageDictionaryCache: ImageCacheProtocol {
     /// helper method to return which key is oldest
     func oldestKey()-> String {
         if history.isEmpty { return "" }
-        if history.count <= cacheSize { return history[0] }
-        
-        /// oldest is the next to be replace
+        if nextIndexToAdd >= history.count { return history[0] }
+        /// oldest key is next to be replace
         return history[nextIndexToAdd]
     }
     
     /// return key of the newest item
     func newestKey()->String {
-        return history[newestKeyIndex()]
+        let index = newestKeyIndex()
+        return history[index]
     }
     
     /// newestIndex + cacheSize to avoid negative number when we minus 1
     /// through mod of cacheSize, we will get the right index before "nextIndexToAdd" in our circular queue indexing
     private func newestKeyIndex()->Int {
-        let currentNewestIndex = ((nextIndexToAdd + cacheSize) - 1) % cacheSize
+        if nextIndexToAdd >= history.count { return history.count - 1 }
+        let currentNewestIndex = ((nextIndexToAdd - 1) + cacheSize) % cacheSize
         return currentNewestIndex
     }
     
@@ -70,13 +71,13 @@ class ImageDictionaryCache: ImageCacheProtocol {
     
     /// load image from cache
     func loadImage(by key: String)->UIImage? {
-        return imageCache[key]
+        guard let image = imageCache[key] else { return nil }
+        return image
     }
     
     /// whenever we have new image to cache, we use this method
     private func addNew(_ key: String, _ image: UIImage) {
         if loadImage(by: key) != nil { return }
-        if nextIndexToAdd < history.count { nextIndexToAdd = nextIndexToAdd % history.count }
         if history.count < cacheSize {
             history.append(key)
             imageCache[key] = image

@@ -47,6 +47,9 @@ class SearchViewModel {
         if keyword.isEmpty { clear(); completionHandler(.success(())); return }
         if isSameKeyword(keyword) { completionHandler(.success(())); return }
         prevKeyword = keyword
+        
+        // starts from page 1 again when we search new keyword
+        pageNo = 1
         let searchReq = PixaAPISearchReq(keywords: keyword, pageSize: pageSize, pageNo: pageNo)
         PixaAPI.shared.search(searchReq) { [weak self] result in
             guard let self = self else { return }

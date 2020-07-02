@@ -19,9 +19,14 @@ class ImageDictionaryCacheTests: XCTestCase {
     
     func testCachingLessThanMax() {
         let cache = ImageDictionaryCache()
+        let group = DispatchGroup()
         for key in 0..<50 {
-            cache.cacheImage(by: String(key), image: UIImage()) {}
+            group.enter()
+            cache.cacheImage(by: String(key), image: UIImage()) {
+                group.leave()
+            }
         }
+        group.wait()
         cache.printInfo()
         let oldestKey = cache.oldestKey()
         let newestKey = cache.newestKey()
@@ -34,9 +39,14 @@ class ImageDictionaryCacheTests: XCTestCase {
     
     func testCachingMoreThanMax() {
         let cache = ImageDictionaryCache()
+        let group = DispatchGroup()
         for key in 0..<101 {
-            cache.cacheImage(by: String(key), image: UIImage()) {}
+            group.enter()
+            cache.cacheImage(by: String(key), image: UIImage()) {
+                group.leave()
+            }
         }
+        group.wait()
         cache.printInfo()
         let oldestKey = cache.oldestKey()
         let newestKey = cache.newestKey()
@@ -48,9 +58,14 @@ class ImageDictionaryCacheTests: XCTestCase {
     
     func testCachingMoreThanMax2() {
         let cache = ImageDictionaryCache()
+        let group = DispatchGroup()
         for i in 0..<200 {
-            cache.cacheImage(by: String(i), image: UIImage()) {}
+            group.enter()
+            cache.cacheImage(by: String(i), image: UIImage()) {
+                 group.leave()
+            }
         }
+        group.wait()
         cache.printInfo()
         let oldestKey = cache.oldestKey()
         XCTAssertTrue(oldestKey == "100")
@@ -61,9 +76,14 @@ class ImageDictionaryCacheTests: XCTestCase {
     
     func testCachingMoreThanMax3() {
         let cache = ImageDictionaryCache()
+        let group = DispatchGroup()
         for i in 0..<1000 {
-            cache.cacheImage(by: String(i), image: UIImage()) {}
+            group.enter()
+            cache.cacheImage(by: String(i), image: UIImage()) {
+                group.leave()
+            }
         }
+        group.wait()
         cache.printInfo()
         let oldestKey = cache.oldestKey()
         XCTAssertTrue(oldestKey == "900")
@@ -75,9 +95,14 @@ class ImageDictionaryCacheTests: XCTestCase {
     func testCacheClear() {
         let expectation = XCTestExpectation(description: "testCacheClear")
         let cache = ImageDictionaryCache()
+        let group = DispatchGroup()
         for i in 0..<999 {
-            cache.cacheImage(by: String(i), image: UIImage()) {}
+            group.enter()
+            cache.cacheImage(by: String(i), image: UIImage()) {
+                group.leave()
+            }
         }
+        group.wait()
         cache.clear() {
             let oldestKey = cache.oldestKey()
             XCTAssertTrue(oldestKey == "")
@@ -99,9 +124,15 @@ class ImageDictionaryCacheTests: XCTestCase {
     
     func testLoadInvalidKey2() {
         let cache = ImageDictionaryCache()
+        let group = DispatchGroup()
         for i in 0..<50 {
-            cache.cacheImage(by: String(i), image: UIImage()) {}
+            group.enter()
+            cache.cacheImage(by: String(i), image: UIImage()) {
+                group.leave()
+            }
         }
+        group.wait()
+        
         let result = cache.loadImage(by: "51")
         XCTAssertNil(result)
         XCTAssertTrue(cache.imageCacheSize() == 50)
