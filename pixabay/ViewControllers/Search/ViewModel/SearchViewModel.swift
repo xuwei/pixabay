@@ -13,10 +13,10 @@ class SearchViewModel {
     let title = ScreenName.search.rawValue
     var data: [ImageViewCellViewModel] = []
     let pageSize = 50
-    var pageNo = 1
-    var total = 0
-    var numOfPages = 0
-    var prevKeyword = ""
+    private var pageNo = 1
+    private var total = 0
+    private var numOfPages = 0
+    private var prevKeyword = ""
     
     /// re-usable closure for array mapping to transform PixaImageModel to ImageViewCellViewModel
     private let transformToCellViewModel: ((PixaImageModel)-> ImageViewCellViewModel) = { model in
