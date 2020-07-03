@@ -29,6 +29,7 @@ class ImageViewCell: UITableViewCell {
     }
     
     /// we always clear the image on cell before re-use
+    /// even though we can clear image on setupUI, but prepareForReuse happens earlier
     override func prepareForReuse() {
         // reset image
         cellImage.image = nil

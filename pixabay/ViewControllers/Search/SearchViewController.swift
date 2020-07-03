@@ -80,7 +80,7 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITa
         let cellModel = viewModel.data[indexPath.row]
         let cell: ImageViewCell = tableView.dequeueReusableCell(withIdentifier: cellModel.identifier, for: indexPath) as! ImageViewCell
         
-        /// setupUI doesn't add image, but resets back to nil incase there's old image from re-used cells
+        /// setupUI doesn't update image
         cell.setupUI(cellModel)
         
         /// loading image from tableviewcontroller is important, so we can check if cell is still around

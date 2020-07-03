@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-/// O(1) to update
+/// O(1) to update through circular indexing
 /// O(1) to lookup by map
 class ImageDictionaryCache: ImageCacheProtocol {
     
