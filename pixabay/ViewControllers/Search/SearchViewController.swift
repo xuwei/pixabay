@@ -85,6 +85,9 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITa
         
         /// loading image from tableviewcontroller is important, so we can check if cell is still around
         ImageLoader.shared.loadImage(from: cellModel.imageUrl) { image in
+            
+            ///  ensure we are back in main queue in callback
+            /// to update UI
             DispatchQueue.main.async {
                 guard let image = image else { return }
                 /// checking if the cell is still in memory before assigning image, incase the cell is already deallocated
