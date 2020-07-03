@@ -9,6 +9,7 @@
 import UIKit
 
 /// protocol to add identifier variable to cell model, convenient for dequeueing 
-protocol BaseTableViewModelProtocol {
+protocol BaseTableViewModelProtocol
+{
     var identifier: String { get }
 }

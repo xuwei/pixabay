@@ -14,6 +14,7 @@ class SearchViewController: UIViewController {
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
+    
     var viewModel = SearchViewModel()
 
     override func viewDidLoad() {
@@ -24,10 +25,16 @@ class SearchViewController: UIViewController {
         enableTapToKeyboardDismiss()
     }
     
+    /// at worst case, with memory warning, we clean up the cache
+    override func didReceiveMemoryWarning() {
+        ImageLoader.shared.clearCache()
+        super.didReceiveMemoryWarning()
+    }
+    
     func setupTableView() {
         
-        guard self.tableView != nil else { return }
-        
+        guard let tableView = self.tableView else { return }
+    
         /// using automatic cell height, will calculate by intrinsic value
         tableView.estimatedRowHeight = 1
         tableView.rowHeight = UITableView.automaticDimension
@@ -43,9 +50,7 @@ class SearchViewController: UIViewController {
     }
     
     func refresh() {
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+        self.tableView.reloadData()
     }
     
     func showLoading() {
@@ -54,9 +59,7 @@ class SearchViewController: UIViewController {
     }
     
     func hideLoading() {
-        DispatchQueue.main.async {
-            self.loadingIndicator.stopAnimating()
-        }
+        self.loadingIndicator.stopAnimating()
     }
     
     func showNoResult(_ show: Bool) {
@@ -76,14 +79,17 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITa
         
         let cellModel = viewModel.data[indexPath.row]
         let cell: ImageViewCell = tableView.dequeueReusableCell(withIdentifier: cellModel.identifier, for: indexPath) as! ImageViewCell
+        
+        /// setupUI doesn't add image, but resets back to nil incase there's old image from re-used cells
         cell.setupUI(cellModel)
         
-        /// loading image from tableviewcontroller, to handle scenario where cells are already scrolled passed and we want to determine if we still apply the fetched image
+        /// loading image from tableviewcontroller is important, so we can check if cell is still around
         ImageLoader.shared.loadImage(from: cellModel.imageUrl) { image in
-            guard let img = image else { return }
             DispatchQueue.main.async {
+                guard let image = image else { return }
+                /// checking if the cell is still in memory before assigning image, incase the cell is already deallocated
                 if let existingCell = tableView.cellForRow(at: indexPath) as? ImageViewCell {
-                    existingCell.cellImage.image = img
+                    existingCell.cellImage.image = image
                 }
                 
             }
@@ -94,18 +100,20 @@ extension SearchViewController: UITableViewDelegate, UITableViewDataSource, UITa
     func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
         for indexPath in indexPaths {
             if viewModel.needMore(for: indexPath.row) {
-                viewModel.loadMore { [weak self] result in
-                    guard let self = self else { return }
-                    switch result {
-                    case .failure(let err):
-                        self.showNoResult(true)
-                        self.alertError(with: err)
-                    case .success:
-                        self.refresh()
+                self.viewModel.loadMore { result in
+                    ///  ensure we are back in main queue in callback
+                    /// to update UI
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else { return }
+                        switch result {
+                        case .failure(let err):
+                            self.showNoResult(true)
+                            self.alertError(with: err)
+                        case .success:
+                            self.refresh()
+                        }
                     }
                 }
-                
-                /// no need to check further once we know we need to load more
                 return
             }
         }
@@ -120,17 +128,22 @@ extension SearchViewController: UISearchBarDelegate {
         searchBar.resignFirstResponder()
     }
     
+    /// apply search when text editing ended on search bar
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         guard let text = searchBar.text else { return }
         showLoading()
         viewModel.search(text) { [weak self] result in
-            guard let self = self else { return }
-            self.hideLoading()
-            switch result {
-            case .success(()):
-                self.refresh()
-            case .failure(let err):
-                self.alertError(with: err)
+            
+            /// When we handle callback in ViewController and we want to handle UI updates
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                self.hideLoading()
+                switch result {
+                case .success(()):
+                    self.refresh()
+                case .failure(let err):
+                    self.alertError(with: err)
+                }
             }
         }
     }

@@ -23,7 +23,9 @@ class PixaAPI {
     /// calls search API
     func search(_ req: PixaAPISearchReq, completionHandler: @escaping (Result<PixaSearchResultModel, PixaAPIError>) -> Void) {
             let urlComponent: URLComponents? = generateSearchURL(req)
-            guard urlComponent != nil, let url = urlComponent?.url else {
+        
+            /// ensure it's valid url
+            guard let url = urlComponent?.url else {
                 completionHandler(.failure(.invalidParams)); return
             }
             
@@ -34,21 +36,25 @@ class PixaAPI {
                     self?.dataTask = nil
                 }
                 
-                if err != nil {
+                
+                /// checking if we have error
+                if err != nil { completionHandler(.failure(.genericError)); return }
+                
+                /// checking if it's sucessful http response
+                guard let data = data,
+                    let response = response as? HTTPURLResponse,
+                    response.statusCode == SuccessHTTPStatusCode else {
                     completionHandler(.failure(.genericError)); return
-                } else {
-                    guard let data = data, let response = response as? HTTPURLResponse, response.statusCode == SuccessHTTPStatusCode else { completionHandler(.failure(.genericError)); return
-                    }
-                    
-                    let resultDecoder = JSONDecoder()
-                    do {
-                        let result: PixaSearchResultModel = try resultDecoder.decode(PixaSearchResultModel.self, from: data)
-                        completionHandler(.success(result))
-                    } catch {
-                        completionHandler(.failure(PixaAPIError.genericError)); return
-                    }
                 }
                 
+                /// parse response
+                let resultDecoder = JSONDecoder()
+                do {
+                    let result: PixaSearchResultModel = try resultDecoder.decode(PixaSearchResultModel.self, from: data)
+                    completionHandler(.success(result))
+                } catch {
+                    completionHandler(.failure(PixaAPIError.genericError)); return
+                }
             }
             dataTask?.resume()
     }
@@ -56,6 +62,7 @@ class PixaAPI {
     /// encapsulate the logic to generate search URL
     private func generateSearchURL(_ req: PixaAPISearchReq)->URLComponents? {
         
+        /// ensure parameters makes sense first
         if req.keywords.isEmpty { return nil }
         if req.pageSize <= 0 { return nil }
         if req.pageNo <= 0 { return nil }

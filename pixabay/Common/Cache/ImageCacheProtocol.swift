@@ -11,5 +11,5 @@ import UIKit
 protocol ImageCacheProtocol {
     func cacheImage(by key: String, image: UIImage, completionHandler: @escaping (()-> Void))
     func loadImage(by key: String)->UIImage?
-    func printInfo()
+    func clear(_ completionHandler: (()->Void)?)
 }

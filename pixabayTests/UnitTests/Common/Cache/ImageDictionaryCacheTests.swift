@@ -26,6 +26,8 @@ class ImageDictionaryCacheTests: XCTestCase {
                 group.leave()
             }
         }
+        
+        /// using group to wait for all concurrent operations to complete first
         group.wait()
         cache.printInfo()
         let oldestKey = cache.oldestKey()
@@ -158,5 +160,27 @@ class ImageDictionaryCacheTests: XCTestCase {
         cache.printInfo()
         XCTAssertTrue(cache.imageCacheSize() == 100)
         XCTAssertTrue(cache.historySize() == 100)
+    }
+    
+    /// in case of concurrently caching, repeatedly caching same numbers
+    /// our cache should stay same size as total number of repeated elements instead of getting filled up
+    func testConcurrentCachingRepeatedElements() {
+        let keys = ["1", "2", "3", "4", "5"]
+        let cache = ImageDictionaryCache()
+        // Do any additional setup after loading the view, typically from a nib.
+        let group = DispatchGroup()
+        DispatchQueue.concurrentPerform(iterations: 10000) { index in
+            group.enter()
+            cache.cacheImage(by: keys.randomElement() ?? "1", image: UIImage()) {
+                group.leave()
+            }
+            
+        }
+        
+        group.wait()
+        
+        cache.printInfo()
+        XCTAssertTrue(cache.imageCacheSize() == 5)
+        XCTAssertTrue(cache.historySize() == 5)
     }
 }

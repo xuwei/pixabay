@@ -23,12 +23,14 @@ class ImageViewCell: UITableViewCell {
         cellImage.layer.cornerRadius = cornerRadius
     }
     
-    func setupUI(_ viewModel: BaseTableViewModelProtocol) {
-        let vm = viewModel as! ImageViewCellViewModel
-        user.text = vm.user
-        tags.text = vm.tags
-        
-        // reset image before loading from tableviewcontroller 
+    func setupUI(_ viewModel: ImageViewCellViewModel) {
+        user.text = viewModel.user
+        tags.text = viewModel.tags
+    }
+    
+    /// we always clear the image on cell before re-use
+    override func prepareForReuse() {
+        // reset image
         cellImage.image = nil
     }
 }

@@ -18,13 +18,18 @@ class SearchViewModel {
     var numOfPages = 0
     var prevKeyword = ""
     
-    /// closure for array map to transform PixaImageModel to cell models
+    /// re-usable closure for array mapping to transform PixaImageModel to ImageViewCellViewModel
     private let transformToCellViewModel: ((PixaImageModel)-> ImageViewCellViewModel) = { model in
         return ImageViewCellViewModel(imageUrl: model.webformatURL, user: model.user, tags: model.tags)
     }
     
+    /// pagination when we need 
     func loadMore(_ completionHandler: @escaping ((Result<[ImageViewCellViewModel], PixaAPIError>)->Void)) {
+        
+        /// no point fetching more if we are already on last page
         guard isLastPage() == false else { return }
+        
+        /// increment a page number
         pageNo = pageNo + 1
         let searchReq = PixaAPISearchReq(keywords: prevKeyword, pageSize: pageSize, pageNo: pageNo)
         PixaAPI.shared.search(searchReq) { [weak self] result in
@@ -44,15 +49,19 @@ class SearchViewModel {
     func search(_ keyword: String,
                 _ completionHandler: @escaping ((Result<(Void),PixaAPIError>)->Void)) {
         
+        /// checking conditions where we don't need to search at all
         if keyword.isEmpty { clear(); completionHandler(.success(())); return }
         if isSameKeyword(keyword) { completionHandler(.success(())); return }
+        
+        
+        /// keeping track of previous keyword
         prevKeyword = keyword
         
-        // starts from page 1 again when we search new keyword
+        /// starts from page 1 again when we search new keyword
         pageNo = 1
         let searchReq = PixaAPISearchReq(keywords: keyword, pageSize: pageSize, pageNo: pageNo)
         PixaAPI.shared.search(searchReq) { [weak self] result in
-            guard let self = self else { return }
+            guard let self = self else { completionHandler(.success(())); return }
             switch result {
             case .success(let searchResult):
                 self.total = searchResult.total
@@ -102,7 +111,11 @@ extension SearchViewModel {
        
     /// helper method to validate conditions for incrementing page
     func needMore(for index: Int)-> Bool {
-        if index >= total { return false }
+        
+        /// if index is beyond total, then no point fetching more
+        if index > total { return false }
+        
+        /// if index is more than what data has, fetch more
         return index >= (self.data.count - 1) ? true : false
     }
 }

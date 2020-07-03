@@ -9,6 +9,7 @@
 import UIKit
 
 /// ImageNSCache leverages on NSCache instead of Dictionary
+/// Added for comparison purpose
 class ImageNSCache: ImageCacheProtocol {
     
     private var imageCache = NSCache<NSString, UIImage>()
@@ -24,6 +25,10 @@ class ImageNSCache: ImageCacheProtocol {
     
     func loadImage(by key: String) -> UIImage? {
         return imageCache.object(forKey: key as NSString)
+    }
+    
+    func clear(_ completionHandler: (()->Void)?) {
+        imageCache.removeAllObjects()
     }
     
     func printInfo() {

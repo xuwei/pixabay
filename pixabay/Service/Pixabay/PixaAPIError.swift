@@ -16,6 +16,7 @@ enum PixaAPIError: Error {
     case genericError
 }
 
+/// giving meaningful error messages
 extension PixaAPIError: LocalizedError {
     public var errorDescription: String? {
         switch self {

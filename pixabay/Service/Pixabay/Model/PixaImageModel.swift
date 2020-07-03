@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct PixaImageModel: Codable {
+struct PixaImageModel: Codable { 
     let id: Int
     let tags: String
     let webformatURL: String

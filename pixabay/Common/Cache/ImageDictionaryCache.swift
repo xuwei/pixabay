@@ -9,8 +9,7 @@
 import Foundation
 import UIKit
 
-/// O(1) to remove oldest using circular queue indexing
-/// O(1) to insert
+/// O(1) to update
 /// O(1) to lookup by map
 class ImageDictionaryCache: ImageCacheProtocol {
     
@@ -19,48 +18,29 @@ class ImageDictionaryCache: ImageCacheProtocol {
     private var imageCache = Dictionary<String, UIImage>()
     private var nextIndexToAdd = 0
     
-    /// we use same queue for caching operations
-    /// to ensure all operations on imageCache is through one queue
-    private let queue = DispatchQueue(label: "ImageDictionaryCache")
+    /// we use same queue for updating operations
+    /// to ensure operations on imageCache is serially through one queue, enabling transactional update on cache
+    private let serialQueue = DispatchQueue(label: "ImageDictionaryCache")
     
     init() {
+        /// reserving capacity minimalise the need of memory re-allocation
         imageCache.reserveCapacity(cacheSize)
         history.reserveCapacity(cacheSize)
     }
     
     func cacheImage(by key: String, image: UIImage, completionHandler: @escaping (()->Void)) {
-        queue.async { [weak self] in
+        /// whenever we update our cache, pass it through serialQueue
+        serialQueue.async { [weak self] in
             guard let self = self else { return }
             self.addNew(key, image)
             completionHandler()
         }
     }
     
-    /// helper method to return which key is oldest
-    func oldestKey()-> String {
-        if history.isEmpty { return "" }
-        if nextIndexToAdd >= history.count { return history[0] }
-        /// oldest key is next to be replace
-        return history[nextIndexToAdd]
-    }
-    
-    /// return key of the newest item
-    func newestKey()->String {
-        let index = newestKeyIndex()
-        return history[index]
-    }
-    
-    /// newestIndex + cacheSize to avoid negative number when we minus 1
-    /// through mod of cacheSize, we will get the right index before "nextIndexToAdd" in our circular queue indexing
-    private func newestKeyIndex()->Int {
-        if nextIndexToAdd >= history.count { return history.count - 1 }
-        let currentNewestIndex = ((nextIndexToAdd - 1) + cacheSize) % cacheSize
-        return currentNewestIndex
-    }
-    
-    /// to reset the cache
+    /// clear method to reset the cache
+    /// handy when we want to free up memory in low memory conditions
     func clear(_ completionHandler: (()->Void)?) {
-        queue.async {
+        serialQueue.async {
             self.nextIndexToAdd = 0
             self.imageCache.removeAll()
             self.history.removeAll()
@@ -69,15 +49,19 @@ class ImageDictionaryCache: ImageCacheProtocol {
         }
     }
     
-    /// load image from cache
+    /// load image from cache if it exist
     func loadImage(by key: String)->UIImage? {
         guard let image = imageCache[key] else { return nil }
         return image
     }
     
-    /// whenever we have new image to cache, we use this method
+    /// adding new image to cache
     private func addNew(_ key: String, _ image: UIImage) {
+        
+        /// checking if image to be add already exist first
         if loadImage(by: key) != nil { return }
+        
+        /// condition where cache is not filled up yet, so we just append to history
         if history.count < cacheSize {
             history.append(key)
             imageCache[key] = image
@@ -87,11 +71,13 @@ class ImageDictionaryCache: ImageCacheProtocol {
             history[nextIndexToAdd] = key
         }
         imageCache[key] = image
+        
+        /// using circular indexing strategy to re-use oldest slots for caching once we filled up cache 
         nextIndexToAdd = (nextIndexToAdd + 1) % cacheSize
     }
 }
 
-/// helper methods for debugging
+/// helper methods for debugging, not essential for implementation
 extension ImageDictionaryCache {
     
     func imageCacheSize()->Int {
@@ -108,5 +94,28 @@ extension ImageDictionaryCache {
        print(imageCache)
        print("history count: \(history.count)")
        print("cache items count: \(imageCache.count)")
+    }
+    
+    func oldestKey()-> String {
+      if history.isEmpty { return "" }
+      if nextIndexToAdd >= history.count { return history[0] }
+      /// oldest key is next to be replace
+      return history[nextIndexToAdd]
+    }
+    
+    
+    /// return key of the newest item
+    func newestKey()->String {
+        let index = newestKeyIndex()
+        return history[index]
+    }
+    
+    /// newestIndex + cacheSize to avoid negative number when we minus 1
+    /// mod of cacheSize to get the index of item before "nextIndexToAdd"
+    private func newestKeyIndex()->Int {
+        /// before history reaches cacheSize, we just return whatever is last index by size of history
+        if nextIndexToAdd >= history.count { return history.count - 1 }
+        let currentNewestIndex = ((nextIndexToAdd - 1) + cacheSize) % cacheSize
+        return currentNewestIndex
     }
 }
