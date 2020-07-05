@@ -64,7 +64,6 @@ class ImageDictionaryCache: ImageCacheProtocol {
         /// condition where cache is not filled up yet, so we just append to history
         if history.count < cacheSize {
             history.append(key)
-            imageCache[key] = image
         } else {
             let keyToBeReplaced = history[nextIndexToAdd]
             imageCache.removeValue(forKey: keyToBeReplaced)
